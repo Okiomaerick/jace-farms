@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+// Using absolute path from public folder
+const logo = '/images/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,8 +38,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
-            <Link to="/" className="text-2xl font-bold text-green-700">
-              Jace Farms
+            <Link to="/" className="flex items-center">
+              <img 
+                src={logo} 
+                alt="Jace Farms Logo" 
+                className="h-20 w-auto" 
+                style={{ maxHeight: '80px' }}
+              />
             </Link>
           </div>
           
@@ -50,8 +57,8 @@ const Navbar = () => {
                   to={link.path}
                   className={`px-3 py-2 rounded-md text-sm font-medium ${
                     location.pathname === link.path
-                      ? 'text-green-700 border-b-2 border-green-700'
-                      : 'text-gray-700 hover:text-green-700'
+                      ? 'text-green-700 font-semibold'
+                      : 'text-gray-700 hover:text-green-600'
                   }`}
                 >
                   {link.name}

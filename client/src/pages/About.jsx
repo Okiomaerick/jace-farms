@@ -1,6 +1,58 @@
 import { Link } from 'react-router-dom';
 import heroImage from '../assets/images/hero.jpg'; // Using the same hero image as in the Hero component
 
+// Import team member images (will be undefined if files don't exist)
+const jamesImg = () => {
+  try {
+    return require('../assets/images/team/james.jpg');
+  } catch (e) {
+    return null;
+  }
+};
+
+const aliImg = () => {
+  try {
+    return require('../assets/images/team/ali.jpg');
+  } catch (e) {
+    return null;
+  }
+};
+
+const collinsImg = () => {
+  try {
+    return require('../assets/images/team/collins.jpg');
+  } catch (e) {
+    return null;
+  }
+};
+
+const teamMembers = [
+  {
+    id: 1,
+    name: 'James Nganga',
+    role: 'Founder & CEO',
+    bio: 'With over 20 years in agribusiness, James leads our vision for sustainable and transformative farming in Kenya.',
+    image: jamesImg(),
+    initials: 'JN'
+  },
+  {
+    id: 2,
+    name: 'Mr. Ali',
+    role: 'Head of Operations',
+    bio: 'Mr. Ali oversees our day-to-day operations with a focus on process efficiency and top-tier service delivery.',
+    image: aliImg(),
+    initials: 'MA'
+  },
+  {
+    id: 3,
+    name: 'Collins Caretakers',
+    role: 'Lead Agronomist',
+    bio: 'Collins brings deep expertise in crop science and sustainable farming, helping clients improve yields through smart agronomic practices.',
+    image: collinsImg(),
+    initials: 'CC'
+  }
+];
+
 const About = () => {
   return (
     <div className="bg-white">
@@ -163,53 +215,42 @@ const About = () => {
 
           <div className="mt-10">
             <div className="space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12">
-              {/* Team Member 1 */}
-              <div className="pt-6">
-                <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
-                  <div className="-mt-6">
-                    <div className="flex items-center justify-center h-24 w-24 rounded-md bg-green-500 text-white mx-auto">
-                      <span className="text-3xl font-bold">JN</span>
+              {teamMembers.map((member) => (
+                <div key={member.id} className="pt-6">
+                  <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8 h-full">
+                    <div className="-mt-6 flex flex-col items-center">
+                      <div className="relative">
+                        {member.image ? (
+                          <>
+                            <img
+                              className="h-24 w-24 rounded-full object-cover border-2 border-green-500"
+                              src={member.image}
+                              alt={member.name}
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                const fallback = e.target.nextElementSibling;
+                                if (fallback) fallback.style.display = 'flex';
+                              }}
+                            />
+                            <div className="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-700 text-2xl absolute top-0 left-0 hidden">
+                              {member.initials}
+                            </div>
+                          </>
+                        ) : (
+                          <div className="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-700 text-2xl">
+                            {member.initials}
+                          </div>
+                        )}
+                      </div>
+                      <h3 className="mt-8 text-lg font-medium text-gray-900 text-center">{member.name}</h3>
+                      <p className="mt-1 text-base text-green-600 text-center">{member.role}</p>
+                      <p className="mt-3 text-base text-gray-500 text-center">
+                        {member.bio}
+                      </p>
                     </div>
-                    <h3 className="mt-8 text-lg font-medium text-gray-900 text-center">James Nganga</h3>
-                    <p className="mt-1 text-base text-green-600 text-center">Founder & CEO</p>
-                    <p className="mt-3 text-base text-gray-500 text-center">
-                      With over 20 years in agribusiness, James leads our vision for sustainable and transformative farming in Kenya.
-                    </p>
                   </div>
                 </div>
-              </div>
-
-              {/* Team Member 2 */}
-              <div className="pt-6">
-                <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
-                  <div className="-mt-6">
-                    <div className="flex items-center justify-center h-24 w-24 rounded-md bg-green-500 text-white mx-auto">
-                      <span className="text-3xl font-bold">MA</span>
-                    </div>
-                    <h3 className="mt-8 text-lg font-medium text-gray-900 text-center">Mr. Ali</h3>
-                    <p className="mt-1 text-base text-green-600 text-center">Head of Operations</p>
-                    <p className="mt-3 text-base text-gray-500 text-center">
-                      Mr. Ali oversees our day-to-day operations with a focus on process efficiency and top-tier service delivery.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Team Member 3 */}
-              <div className="pt-6">
-                <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
-                  <div className="-mt-6">
-                    <div className="flex items-center justify-center h-24 w-24 rounded-md bg-green-500 text-white mx-auto">
-                      <span className="text-3xl font-bold">CC</span>
-                    </div>
-                    <h3 className="mt-8 text-lg font-medium text-gray-900 text-center">Collins Caretakers</h3>
-                    <p className="mt-1 text-base text-green-600 text-center">Lead Agronomist</p>
-                    <p className="mt-3 text-base text-gray-500 text-center">
-                      Collins brings deep expertise in crop science and sustainable farming, helping clients improve yields through smart agronomic practices.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,29 +1,54 @@
 import { useState } from 'react';
 
+// Import testimonial images (will be undefined if files don't exist)
+const luciaImg = () => {
+  try {
+    return require('../assets/images/testimonials/lucia.jpg');
+  } catch (e) {
+    return null;
+  }
+};
+
+const muremiImg = () => {
+  try {
+    return require('../assets/images/testimonials/muremi.jpg');
+  } catch (e) {
+    return null;
+  }
+};
+
+const hesbonImg = () => {
+  try {
+    return require('../assets/images/testimonials/hesbon.jpg');
+  } catch (e) {
+    return null;
+  }
+};
+
 const testimonials = [
   {
     id: 1,
     name: 'Lucia Jaber',
     role: 'Mixed Farmer, Kericho',
-    content:
-      'Jace Farms helped me balance my crop and poultry farming. Their feed and agronomy advice are on point.',
-    image: '/images/testimonials/Lucia-jaber.jpg',
+    content: 'Jace Farms helped me balance my crop and poultry farming. Their feed and agronomy advice are on point.',
+    image: luciaImg(),
+    initials: 'LJ'
   },
   {
     id: 2,
     name: 'Muremi Nene',
     role: 'Poultry Farmer, Nyeri',
-    content:
-      'I doubled my egg output thanks to their feed plan and disease control tips. Very reliable team.',
-    image: '/images/testimonials/muremi-nene.jpg',
+    content: 'I doubled my egg output thanks to their feed plan and disease control tips. Very reliable team.',
+    image: muremiImg(),
+    initials: 'MN'
   },
   {
     id: 3,
     name: 'Hesbon Mogaka',
     role: 'Agribusiness Consultant, Kisii',
-    content:
-      'Working with Jace Farms made my advisory work easier. Their tech solutions and consulting are solid.',
-    image: '/images/testimonials/hesbon-mogaka.jpg',
+    content: 'Working with Jace Farms made my advisory work easier. Their tech solutions and consulting are solid.',
+    image: hesbonImg(),
+    initials: 'HM'
   },
 ];
 
@@ -56,11 +81,20 @@ const Testimonials = () => {
               <div className="px-8 py-10">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <img
-                      className="h-16 w-16 rounded-full"
-                      src={testimonials[currentIndex].image}
-                      alt={testimonials[currentIndex].name}
-                    />
+                    {testimonials[currentIndex].image ? (
+                      <img
+                        className="h-16 w-16 rounded-full object-cover border-2 border-green-100"
+                        src={testimonials[currentIndex].image}
+                        alt={testimonials[currentIndex].name}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div className={`h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-700 text-xl ${testimonials[currentIndex].image ? 'hidden' : 'flex'}`}>
+                      {testimonials[currentIndex].initials}
+                    </div>
                   </div>
                   <div className="ml-4">
                     <div className="text-lg font-medium text-gray-900">

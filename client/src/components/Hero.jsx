@@ -38,16 +38,28 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Background image on the right side */}
-      <div
-        className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          minHeight: '32rem',
-        }}
-      />
+      {/* Background image on the right side with overlay */}
+      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 relative">
+        <div
+          className="w-full h-full absolute inset-0"
+          style={{
+            backgroundImage: `url(${heroImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '32rem',
+          }}
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4">
+          <div className="text-center">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-wider mb-2">
+              Jace Farms
+            </h2>
+            <p className="text-xl md:text-2xl lg:text-3xl text-green-200 font-medium">
+              & Consultancy
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
